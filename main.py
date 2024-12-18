@@ -9,6 +9,10 @@ def main():
     print("Screen width:", SCREEN_WIDTH)
     print("Screen height:", SCREEN_HEIGHT)
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
     dt = 0
@@ -21,9 +25,13 @@ def main():
                 return
         #fill background
         screen.fill(0)
-        
-        #draw player
-        player.draw(screen)
+
+        #draw entities
+        for entity in updatable:
+            entity.update(dt)
+
+        for entity in drawable:
+            entity.draw(screen)
 
         #refresh screen at 60 fps
         pygame.display.flip()
